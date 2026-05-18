@@ -5,7 +5,6 @@ export interface IUser extends Document {
   email: string
   passwordHash: string
   points: number
-  isAdmin: boolean
   createdAt: Date
 }
 
@@ -15,7 +14,6 @@ const UserSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true, lowercase: true },
     passwordHash: { type: String, required: true },
     points: { type: Number, default: 0 },
-    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 )

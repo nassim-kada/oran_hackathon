@@ -23,9 +23,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
   }
 
-  const token = signToken({ userId: user._id.toString(), username: user.username, isAdmin: user.isAdmin })
+  const token = signToken({ userId: user._id.toString(), username: user.username })
 
-  const res = NextResponse.json({ message: 'Logged in', user: { _id: user._id.toString(), username: user.username, points: user.points, isAdmin: user.isAdmin } })
+  const res = NextResponse.json({ message: 'Logged in', user: { _id: user._id.toString(), username: user.username, points: user.points } })
   res.cookies.set('token', token, { httpOnly: true, path: '/', maxAge: 60 * 60 * 24 * 7 })
   return res
 }

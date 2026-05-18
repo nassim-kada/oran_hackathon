@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 
   await connectDB()
 
-  // Find the currently active user for the bin
+  
   const binSession = await BinSession.findOne({ binId: 'default', active: true })
   
   if (!binSession) {

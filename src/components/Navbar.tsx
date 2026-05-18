@@ -8,7 +8,6 @@ interface User {
   _id: string
   username: string
   points: number
-  isAdmin: boolean
 }
 
 export default function Navbar() {
