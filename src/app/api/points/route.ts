@@ -15,23 +15,13 @@ const POINTS: Record<string, number> = {
  * Called by the ESP32 / Python YOLO script whenever a bottle or can
  * crosses the detection line.
  *
- * Body: { token: string, type: 'bottle' | 'can', count?: number }
- *
- * The `token` must match the shared secret in POINTS_API_SECRET env var,
- * so only the physical device can award points.
+ * Body: { type: 'bottle' | 'can', count?: number }
  */
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { token, type, count = 1 } = body as {
-    token: string
+  const { type, count = 1 } = body as {
     type: string
     count?: number
-  }
-
-  // Validate shared secret
-  const secret = process.env.POINTS_API_SECRET
-  if (!secret || token !== secret) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   if (!type || !POINTS[type]) {

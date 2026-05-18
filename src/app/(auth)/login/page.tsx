@@ -30,7 +30,11 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/scan')
+    if (data.user) {
+      localStorage.setItem('user', JSON.stringify(data.user))
+    }
+
+    router.push('/session')
     router.refresh()
   }
 

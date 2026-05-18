@@ -22,19 +22,39 @@ export default function SessionPage() {
 
   // Load current user and check if session is active
   useEffect(() => {
-    Promise.all([
-      fetch('/api/auth/me').then((r) => r.json()),
-      fetch('/api/bin/session').then((r) => r.json().catch(() => ({ active: false })))
-    ])
-      .then(([authData, sessionData]) => {
-        if (!authData.user) {
-          router.push('/login')
-          return
-        }
+    let authData = { user: null }
+    try {
+      const stored = localStorage.getItem('user')
+      if (stored) authData.user = JSON.parse(stored)
+    } catch {}
+
+    if (!authData.user) {
+      router.push('/login')
+      return
+    }
+
+    fetch('/api/bin/session')
+      .then((r) => r.json().catch(() => ({ active: false })))
+      .then((sessionData) => {
         setUser(authData.user)
-        setLivePoints(authData.user.points)
-        setSessionActive(sessionData.active)
-        setLoading(false)
+        setLivePoints(authData.user!.points)
+        
+        if (!sessionData.active) {
+          fetch('/api/bin/session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'start' }),
+          }).then(() => {
+            setSessionActive(true)
+            setLoading(false)
+          }).catch(() => {
+            setSessionActive(false)
+            setLoading(false)
+          })
+        } else {
+          setSessionActive(true)
+          setLoading(false)
+        }
       })
       .catch(() => router.push('/login'))
   }, [router])
@@ -49,6 +69,11 @@ export default function SessionPage() {
       const diff = data.points - livePoints
       setPointsDelta(diff)
       setLivePoints(data.points)
+      if (user) {
+        const updatedUser = { ...user, points: data.points }
+        setUser(updatedUser)
+        localStorage.setItem('user', JSON.stringify(updatedUser))
+      }
       setShowPop(true)
       setTimeout(() => setShowPop(false), 1400)
     }
@@ -179,7 +204,7 @@ export default function SessionPage() {
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {[
-            { n: '1', icon: '📱', text: 'Tap "Connect to Bin" below to claim this smart bin.' },
+            { n: '1', icon: '📱', text: 'You scanned the bin! The smart bin is now linked to your account.' },
             { n: '2', icon: '🤖', text: 'The AI camera detects each bottle or can you drop in.' },
             { n: '3', icon: '🌿', text: 'Bottle = +15 pts  ·  Can = +20 pts — credited instantly!' },
             { n: '4', icon: '✅', text: 'Tap "End Session" when you are done to let others use it.' },
@@ -211,16 +236,18 @@ export default function SessionPage() {
         </div>
       </div>
 
-      {/* Toggle live polling */}
+      {/* Action buttons */}
       <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-        <button
-          className={`btn ${sessionActive ? 'btn-outline' : 'btn-green'}`}
-          style={{ flex: 1 }}
-          onClick={toggleSession}
-          disabled={actionLoading}
-        >
-          {actionLoading ? 'Please wait...' : sessionActive ? '⏹ End Session' : '▶ Connect to Bin'}
-        </button>
+        {sessionActive && (
+          <button
+            className="btn btn-outline"
+            style={{ flex: 1 }}
+            onClick={toggleSession}
+            disabled={actionLoading}
+          >
+            {actionLoading ? 'Please wait...' : '⏹ End Session'}
+          </button>
+        )}
         <Link href="/rewards" className="btn btn-primary" style={{ flex: 1, textAlign: 'center' }}>
           🎁 Rewards Store
         </Link>

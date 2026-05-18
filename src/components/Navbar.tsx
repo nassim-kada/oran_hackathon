@@ -20,10 +20,16 @@ export default function Navbar() {
   const userMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    fetch('/api/auth/me')
-      .then((r) => r.json())
-      .then((d) => setUser(d.user ?? null))
-      .catch(() => setUser(null))
+    try {
+      const stored = localStorage.getItem('user')
+      if (stored) {
+        setUser(JSON.parse(stored))
+      } else {
+        setUser(null)
+      }
+    } catch {
+      setUser(null)
+    }
   }, [pathname])
 
   // Close user menu on outside click
@@ -44,7 +50,8 @@ export default function Navbar() {
   }, [pathname])
 
   async function logout() {
-    await fetch('/api/auth/logout', { method: 'POST' })
+    await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {})
+    localStorage.removeItem('user')
     setUser(null)
     setUserMenuOpen(false)
     router.push('/')

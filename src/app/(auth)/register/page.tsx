@@ -29,7 +29,11 @@ export default function RegisterPage() {
       return
     }
 
-    router.push('/scan')
+    if (data.user) {
+      localStorage.setItem('user', JSON.stringify(data.user))
+    }
+
+    router.push('/session')
     router.refresh()
   }
 

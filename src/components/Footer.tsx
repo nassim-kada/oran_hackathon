@@ -41,8 +41,8 @@ export default function Footer() {
         </div>
 
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <Link href="/scan" style={{ color: '#6b7280', fontSize: '0.875rem', textDecoration: 'none' }}>
-            Scan
+          <Link href="/session" style={{ color: '#6b7280', fontSize: '0.875rem', textDecoration: 'none' }}>
+            My Session
           </Link>
           <Link href="/rewards" style={{ color: '#6b7280', fontSize: '0.875rem', textDecoration: 'none' }}>
             Rewards

@@ -108,7 +108,7 @@ export default function RewardsPage() {
 
       <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
         <p style={{ color: '#9ca3af', fontSize: '0.9375rem' }}>Need more points?</p>
-        <Link href="/scan" className="btn btn-primary" style={{ marginTop: '0.75rem', display: 'inline-flex' }}>🔍 Scan More Waste</Link>
+        <Link href="/session" className="btn btn-primary" style={{ marginTop: '0.75rem', display: 'inline-flex' }}>📱 Start Session</Link>
       </div>
     </div>
   )
