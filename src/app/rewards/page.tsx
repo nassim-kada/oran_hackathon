@@ -107,8 +107,7 @@ export default function RewardsPage() {
       </div>
 
       <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-        <p style={{ color: '#9ca3af', fontSize: '0.9375rem' }}>Need more points?</p>
-        <Link href="/session" className="btn btn-primary" style={{ marginTop: '0.75rem', display: 'inline-flex' }}>📱 Start Session</Link>
+        <p style={{ color: '#9ca3af', fontSize: '0.9375rem' }}>Need more points? Go to the physical Smart Bin and scan its QR code!</p>
       </div>
     </div>
   )

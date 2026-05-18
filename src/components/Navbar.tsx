@@ -59,7 +59,6 @@ export default function Navbar() {
   }
 
   const navLinks = [
-    { href: '/session', label: 'My Session', icon: '📱' },
     { href: '/rewards', label: 'Rewards', icon: '🎁' },
     { href: '/leaderboard', label: 'Leaderboard', icon: '🏆' },
   ]
@@ -73,7 +72,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="navbar-logo">
             <span className="navbar-logo-icon">🌊</span>
-            <span className="navbar-logo-text">CleanBeach AI</span>
+            <span className="navbar-logo-text">blueBin</span>
           </Link>
 
           {/* Desktop nav links */}

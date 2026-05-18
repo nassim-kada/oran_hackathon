@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'CleanBeach AI — Gamified Beach Cleaning',
+  title: 'blueBin — Gamified Beach Cleaning',
   description: 'Upload waste photos, get AI classification, earn points, and help keep beaches clean.',
 }
 

@@ -35,15 +35,12 @@ export default function Footer() {
               backgroundClip: 'text',
             }}
           >
-            CleanBeach AI
+            blueBin
           </span>
           <span style={{ color: '#9ca3af', fontSize: '0.875rem' }}>— Gamified Beach Cleaning</span>
         </div>
 
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <Link href="/session" style={{ color: '#6b7280', fontSize: '0.875rem', textDecoration: 'none' }}>
-            My Session
-          </Link>
           <Link href="/rewards" style={{ color: '#6b7280', fontSize: '0.875rem', textDecoration: 'none' }}>
             Rewards
           </Link>
@@ -53,7 +50,7 @@ export default function Footer() {
         </div>
 
         <p suppressHydrationWarning style={{ color: '#9ca3af', fontSize: '0.8125rem' }}>
-          © {new Date().getFullYear()} CleanBeach AI. Made with 🌿 for the planet.
+          © {new Date().getFullYear()} blueBin. Made with 🌿 for the planet.
         </p>
       </div>
     </footer>

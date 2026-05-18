@@ -17,7 +17,7 @@ export default function HomePage() {
           <div className="animate-fade-up">
             <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🌊</div>
             <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3.25rem)', fontWeight: 900, lineHeight: 1.15, marginBottom: '1.25rem' }}>
-              Clean Beaches.<br />Earn Rewards. 🌱
+              blueBin.<br />Earn Rewards. 🌱
             </h1>
             <p style={{ fontSize: '1.125rem', opacity: 0.88, maxWidth: 520, margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
               Upload waste photos, get instant AI classification, and earn green points for keeping our beaches beautiful.
@@ -25,9 +25,6 @@ export default function HomePage() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/register" className="btn" style={{ background: 'white', color: '#0077b6', fontWeight: 700, fontSize: '1rem', padding: '0.875rem 2rem' }}>
                 Get Started Free →
-              </Link>
-              <Link href="/session" className="btn btn-outline" style={{ borderColor: 'rgba(255,255,255,0.7)', color: 'white', fontSize: '1rem', padding: '0.875rem 2rem' }}>
-                📱 My Session
               </Link>
             </div>
           </div>
@@ -56,7 +53,7 @@ export default function HomePage() {
         <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem' }}>Ready to make a difference?</h2>
         <p style={{ opacity: 0.9, marginBottom: '2rem', fontSize: '1.0625rem' }}>Join thousands of eco-warriors cleaning beaches and earning rewards.</p>
         <Link href="/register" className="btn" style={{ background: 'white', color: '#2d6a4f', fontWeight: 700, fontSize: '1rem', padding: '0.875rem 2.5rem' }}>
-          Join CleanBeach AI 🌊
+          Join blueBin 🌊
         </Link>
       </section>
     </div>

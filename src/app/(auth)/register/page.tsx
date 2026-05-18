@@ -69,7 +69,7 @@ export default function RegisterPage() {
               marginBottom: '0.375rem',
             }}
           >
-            Join CleanBeach AI
+            Join blueBin
           </h1>
           <p style={{ color: '#6b7280', fontSize: '0.9375rem' }}>
             Create your free account and start earning points

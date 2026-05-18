@@ -73,7 +73,7 @@ export default function LoginPage() {
             Welcome back
           </h1>
           <p style={{ color: '#6b7280', fontSize: '0.9375rem' }}>
-            Sign in to your CleanBeach AI account
+            Sign in to your blueBin account
           </p>
         </div>
 

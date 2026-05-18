@@ -1,9 +1,20 @@
 import { NextResponse } from 'next/server'
-import { connectDB } from '@/lib/db/mongoose'
-import User from '@/models/User'
+
+const FASTAPI_URL = 'http://127.0.0.1:8000'
 
 export async function GET() {
-  await connectDB()
-  const users = await User.find().sort({ points: -1 }).limit(10).select('username points')
-  return NextResponse.json({ leaderboard: users })
+  try {
+    const res = await fetch(`${FASTAPI_URL}/leaderboard`)
+    const data = await res.json()
+
+    const leaderboard = data.leaderboard.map(([username, info]: [string, any], idx: number) => ({
+      _id: String(idx),
+      username,
+      points: info.points,
+    }))
+
+    return NextResponse.json({ leaderboard })
+  } catch (e) {
+    return NextResponse.json({ leaderboard: [] })
+  }
 }

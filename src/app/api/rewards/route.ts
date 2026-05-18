@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth/session'
-import { connectDB } from '@/lib/db/mongoose'
-import User from '@/models/User'
-import Redemption from '@/models/Redemption'
+
+const FASTAPI_URL = 'http://127.0.0.1:8000'
 
 export const REWARDS = [
   { id: 'umbrella', name: 'Beach Umbrella Discount', cost: 50, emoji: '☂️' },
@@ -14,14 +13,20 @@ export const REWARDS = [
 export async function GET() {
   const session = await getSession()
   if (!session) {
-    return NextResponse.json({ rewards: REWARDS, userPoints: 0 })
+    return NextResponse.json({ rewards: REWARDS, userPoints: 0, redeemed: [] })
   }
 
-  await connectDB()
-  const user = await User.findById(session.userId).select('points')
-  const redeemed = await Redemption.find({ userId: session.userId }).distinct('rewardName')
-
-  return NextResponse.json({ rewards: REWARDS, userPoints: user?.points ?? 0, redeemed })
+  try {
+    const res = await fetch(`${FASTAPI_URL}/user/${session.username}`)
+    const data = await res.json()
+    return NextResponse.json({
+      rewards: REWARDS,
+      userPoints: data.points ?? 0,
+      redeemed: data.redeemed ?? [],
+    })
+  } catch (e) {
+    return NextResponse.json({ rewards: REWARDS, userPoints: 0, redeemed: [] })
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -36,15 +41,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Reward not found' }, { status: 404 })
   }
 
-  await connectDB()
-  const user = await User.findById(session.userId)
-  if (!user || user.points < reward.cost) {
-    return NextResponse.json({ error: 'Insufficient points' }, { status: 400 })
+  try {
+    const res = await fetch(`${FASTAPI_URL}/redeem`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: session.username,
+        reward_id: rewardId,
+        reward_name: reward.name,
+        cost: reward.cost,
+      }),
+    })
+    const data = await res.json()
+    if (data.error) {
+      return NextResponse.json({ error: data.error }, { status: 400 })
+    }
+    return NextResponse.json({ message: 'Reward redeemed!', remainingPoints: data.remaining_points })
+  } catch (e) {
+    return NextResponse.json({ error: 'API unavailable' }, { status: 503 })
   }
-
-  await Redemption.create({ userId: session.userId, rewardName: reward.name, pointsCost: reward.cost })
-  user.points -= reward.cost
-  await user.save()
-
-  return NextResponse.json({ message: 'Reward redeemed!', remainingPoints: user.points })
 }
