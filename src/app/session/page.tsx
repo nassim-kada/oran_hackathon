@@ -22,7 +22,7 @@ export default function SessionPage() {
 
   // Load current user and check if session is active
   useEffect(() => {
-    let authData = { user: null }
+    let authData: { user: UserInfo | null } = { user: null }
     try {
       const stored = localStorage.getItem('user')
       if (stored) authData.user = JSON.parse(stored)
