@@ -34,7 +34,7 @@ export default function LoginPage() {
       localStorage.setItem('user', JSON.stringify(data.user))
     }
 
-    router.push('/session')
+    router.push('/rewards')
     router.refresh()
   }
 
